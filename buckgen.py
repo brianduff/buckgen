@@ -17,6 +17,13 @@ parser.add_argument(
     default=".",
     type=lambda s: s.split(","),
 )
+parser.add_argument(
+    "-o",
+    "--output_dir",
+    help="the output directory to generate in the project",
+    default="eclipse-out",
+    type=str,
+)
 args, targets = parser.parse_known_args()
 
 if not targets:
@@ -50,11 +57,11 @@ project_template = """<?xml version="1.0" encoding="UTF-8"?>
 classpath_template = """<?xml version="1.0" encoding="UTF-8"?>
 <classpath>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="output" path="bin"/>
 </classpath>
 """
 
 root = ET.fromstring(classpath_template)
+ET.SubElement(root, "classpathentry", {"kind": "output", "path": args.output_dir})
 for source_entry in args.sourcepath:
     ET.SubElement(root, "classpathentry", {"kind": "src", "path": source_entry})
 
