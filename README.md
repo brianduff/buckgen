@@ -9,5 +9,7 @@ This just calls Buck to get the classpath, then spits out .project and .classpat
 Specify Buck targets and optionally a sourcepath root to use. E.g. 
 
 ```
-buckgen.py --sourcepath src program/foo/bar:bar
+buckgen.py --sourcepath src src/com/facebook/buck/cli:main
 ```
+
+This would generate a project for the main code of Buck itself. Remember to actually build the targets (the script doesn't do that for you).
